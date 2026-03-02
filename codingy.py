@@ -50,11 +50,15 @@ if uploaded_file:
         # ==============================
         # 6. Heatmap Korelasi (Seaborn)
         # ==============================
-        st.subheader("🔥 Heatmap Korelasi")
+        st.subheader("🔥 Heatmap Korelasi (Hanya Warna)")
+        # Ambil kolom numerik
+        df_numeric = df.select_dtypes(include=np.number)
         corr = df_numeric.corr()
-        fig_heat, ax = plt.subplots(figsize=(8,6))
-        sns.heatmap(corr, annot=True, cmap="coolwarm", ax=ax)
-        st.pyplot(fig_heat)
+        fig, ax = plt.subplots(figsize=(8,6))  # ukuran lebih besar
+        sns.heatmap(corr, annot=False, cmap="coolwarm", linewidths=0.5, ax=ax)
+        plt.xticks(rotation=45)
+        plt.yticks(rotation=0)
+        st.pyplot(fig)
 
         # ==============================
         # 7. Analisis Regresi Linear
@@ -113,4 +117,5 @@ if uploaded_file:
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
 else:
+
     st.info("Silakan upload file Excel (.xlsx) untuk memulai analisis.")
